@@ -12,7 +12,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT');
 
   app.enableCors({
-    origin: [`http://localhost:${port}`, `https://os.bringbills.com`],
+    origin: [`http://localhost:${port}`, `https://testmail.mordules.com`],
     credentials: true,
     optionsSuccessStatus: 200,
     methods: 'GET,PATCH,POST,PUT,DELETE',
@@ -28,13 +28,13 @@ async function bootstrap() {
   );
 
   const swaggerOptions = new DocumentBuilder()
-    .setTitle('BringBills OS')
+    .setTitle('Nestjs Mailer')
     .setDescription(
-      'API reference for working with BringBills OS version 1.0.0',
+      'A nestjs project to send emails with nestjs mail module, improvmx smtp or gmail smtp with email templates',
     )
     .setVersion('1.0.0')
-    .addServer('https://os.bringbills.com', 'Production')
     .addServer(`http://localhost:${port}`, 'Local environment')
+    .addServer('https://testmail.mordules.com', 'Production')
     .addBearerAuth(
       { type: 'http', scheme: 'Bearer', bearerFormat: 'JWT' },
       'Authorization',
