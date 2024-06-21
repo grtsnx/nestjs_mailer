@@ -14,19 +14,16 @@ import { SendMailsService } from './sendMail.service';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         transport: {
-          host: configService.get<string>('MAILBBY_SMTP'),
-          port: configService.get<number>('MAILBBY_PORT'),
-          secure: true,
-          // service: 'gmail', // in case we want to switch to Gmail SMTP
+          service: 'gmail',
           auth: {
-            user: configService.get<string>('MAILBBY_USERNAME'),
-            pass: configService.get<string>('MAILBBY_PASSWORD'),
+            user: configService.get<string>('EMAIL_ADDRESS'),
+            pass: configService.get<string>('EMAIL_PASSWORD'),
           },
         },
         defaults: {
           from: {
-            name: configService.get<string>('PLATFORM'),
-            address: configService.get<string>('AUTHSENDER'),
+            name: '',
+            address: configService.get<string>('EMAIL_SENDER'),
           },
         },
         template: {
