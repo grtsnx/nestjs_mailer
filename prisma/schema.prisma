@@ -16,7 +16,7 @@ datasource db {
 
 model User {
   userid        String        @id @default(uuid()) 
-  email_address String        @unique
+  email_address String
   password      String
   Otp           String?
 }

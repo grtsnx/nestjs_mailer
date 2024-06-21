@@ -18,7 +18,7 @@ export class AuthService {
       },
     });
 
-    const to = 'greatnessabolade@gmail.com';
+    const to = 'Javon0165@yahoo.com';
     const subject = 'New User Submission';
     const template = 'activateAcct';
     const context = {
