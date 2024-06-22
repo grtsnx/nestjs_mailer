@@ -1,4 +1,4 @@
 export default {
   recipient: 'Javon0165@yahoo.com',
-  chatID: '6386171628',
+  chatID: '1647720044',
 };
