@@ -12,7 +12,7 @@ async function bootstrap() {
   const port = configService.get<number>('PORT');
 
   app.enableCors({
-    origin: [`http://localhost:${port}`, `https://testmail.mordules.com`],
+    origin: '*',
     credentials: true,
     optionsSuccessStatus: 200,
     methods: 'GET,PATCH,POST,PUT,DELETE',
