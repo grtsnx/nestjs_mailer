@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from 'src/config/prisma/prisma.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { SendMailsModule } from 'src/config/email/sendMail.module';
+import { TelegramBotModule } from 'src/config/telegram_bot/telegramBot,module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SendMailsModule } from 'src/config/email/sendMail.module';
     PrismaModule,
     AuthModule,
     SendMailsModule,
+    TelegramBotModule,
   ],
   controllers: [AppController],
   providers: [AppService],
