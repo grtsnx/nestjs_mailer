@@ -8,16 +8,20 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // ✅ Enable CORS early
+  app.enableCors({
+    origin: 'https://idyou.pages.dev', // Your frontend domain
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
+
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT');
 
-  app.enableCors({
-    origin: ['https://idyou.pages.dev'], // whitelist your frontend domain
-    credentials: true,
-    methods: ['GET', 'PATCH', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  });
-  app.use(express.json({ limit: 250 << 20 }));
+  // Middleware and global configurations
+  app.use(express.json({ limit: 250 << 20 })); // 250 MB limit
   app.useGlobalFilters(new GlobalExceptionFilter());
   app.useGlobalPipes(
     new ValidationPipe({
@@ -27,6 +31,7 @@ async function bootstrap() {
     }),
   );
 
+  // Swagger documentation
   const swaggerOptions = new DocumentBuilder()
     .setTitle('Nestjs Mailer')
     .setDescription(
@@ -46,13 +51,12 @@ async function bootstrap() {
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerOptions);
   SwaggerModule.setup('docs', app, swaggerDocument);
 
-  //await app.listen(3000);
-
   try {
     await app.listen(port);
-    console.log(`http://localhost:${port}`);
+    console.log(`Server running on http://localhost:${port}`);
   } catch (err) {
-    console.error(err.message);
+    console.error('Error starting server:', err.message);
   }
 }
+
 bootstrap();
