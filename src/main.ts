@@ -11,8 +11,7 @@ async function bootstrap() {
 
   // ✅ Enable CORS early
   app.enableCors({
-    origin: 'https://idyou.pages.dev', // Your frontend domain
-    credentials: true,
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   });
