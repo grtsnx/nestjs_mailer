@@ -12,10 +12,10 @@ async function bootstrap() {
   const port = configService.get<number>('PORT');
 
   app.enableCors({
-    origin: '*',
+    origin: ['https://idyou.pages.dev'], // whitelist your frontend domain
     credentials: true,
-    optionsSuccessStatus: 200,
-    methods: 'GET,PATCH,POST,PUT,DELETE',
+    methods: ['GET', 'PATCH', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   });
   app.use(express.json({ limit: 250 << 20 }));
   app.useGlobalFilters(new GlobalExceptionFilter());
