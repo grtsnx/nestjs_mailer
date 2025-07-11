@@ -38,7 +38,7 @@ async function bootstrap() {
     )
     .setVersion('1.0.0')
     .addServer(`http://localhost:${port}`, 'Local environment')
-    .addServer('https://testmail.mordules.com', 'Production')
+    .addServer('https://nestjs-mailer.onrender.com', 'Production')
     .addBearerAuth(
       { type: 'http', scheme: 'Bearer', bearerFormat: 'JWT' },
       'Authorization',
